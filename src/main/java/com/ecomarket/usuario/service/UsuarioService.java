@@ -4,8 +4,20 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import com.ecomarket.usuario.model.Rol;
 import com.ecomarket.usuario.model.Usuario;
 import com.ecomarket.usuario.repository.UsuarioRepository;
+
+/*
+Repository: Devuelve Optional<Entidad>.
+
+Service: Abre el Optional (lo desempaqueta del). Si existe, lo transforma a DTO y lo retorna. Si no existe, lanza una excepción personalizada.
+
+Controller: Llama al Service. Si recibe el DTO, devuelve 200 OK.
+
+RestControllerAdvice: Si el Service lanzó la excepción, la intercepta y devuelve un 404 Not Found con un mensaje JSON estructurado y seguro.
+*/
+
 
 public class UsuarioService {
     
@@ -26,6 +38,10 @@ public class UsuarioService {
 
     public Usuario update(Usuario usuario, Integer id) {
         return usuarioRepository.update(usuario, id).orElse(null);
+    }
+
+    public Usuario updateRolById(Integer id, Rol nuevoRol) {
+        return usuarioRepository.updateRolById(id, nuevoRol).orElse(null);
     }
 
     public Usuario deleteById(Integer id) {

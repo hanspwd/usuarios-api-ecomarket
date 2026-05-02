@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import com.ecomarket.usuario.model.Rol;
 import com.ecomarket.usuario.model.Usuario;
 
 public class UsuarioRepository {
@@ -18,29 +19,54 @@ public class UsuarioRepository {
         return usuarios.stream().filter(x -> x.getId().equals(id)).findFirst();
     }
 
+    public Optional<Usuario> readByEmail(String email) {
+        return usuarios.stream().filter(x -> x.getEmail().equals(email)).findFirst();
+    }
+
     public Usuario create(Usuario usuario) {
         usuarios.add(usuario);
         return usuario;
     }
 
     public Optional<Usuario> update(Usuario nUsuario, Integer id) {
-
-        Optional<Usuario> usuarioAntiguo = readById(id);
-
-        if(usuarioAntiguo.isEmpty()) {
+        Optional<Usuario> usuarioOpt = readById(id);
+        if(usuarioOpt.isEmpty()) {
             return Optional.empty();
         }
-
-        usuarioAntiguo.get().setNombre(nUsuario.getNombre());
-        usuarioAntiguo.get().setApellido(nUsuario.getApellido());
-        usuarioAntiguo.get().setDireccion(nUsuario.getDireccion());
-        usuarioAntiguo.get().setEmail(nUsuario.getEmail()); // fines de contacto
-        // usuarioAntiguo.get().setPasswordNoHash(nUsuario.getPasswordNoHash()); // fines de autenticacion (en el microservicio login)
-        return Optional.of(usuarioAntiguo.get());
+        usuarioOpt.get().setNombre(nUsuario.getNombre());
+        usuarioOpt.get().setApellido(nUsuario.getApellido());
+        usuarioOpt.get().setDireccion(nUsuario.getDireccion());
+        usuarioOpt.get().setEmail(nUsuario.getEmail()); // fines de contacto
+        // usuarioOpt.get().setPasswordNoHash(nUsuario.getPasswordNoHash()); // fines de autenticacion (en el microservicio login)
+        return Optional.of(usuarioOpt.get());
     }
 
-    public Usuario delete(Integer id) {
-        return null;
+    public Optional<Usuario> updateRolById(Integer id, Rol nuevoRol) {
+        Optional<Usuario> usuarioOpt = readById(id);
+        if(usuarioOpt.isEmpty()) {
+            return Optional.empty();
+        }
+        usuarioOpt.get().setRol(nuevoRol);
+        return Optional.of(usuarioOpt.get());
+
     }
 
+    public Optional<Usuario> deleteById(Integer id) {
+        Optional<Usuario> usuarioOpt = readById(id);
+        if(usuarioOpt.isEmpty()) {
+            return Optional.empty() ;    
+        }
+       
+        usuarios.removeIf(x-> x.getId().equals(usuarioOpt.get().getId()));
+        return Optional.of(usuarioOpt.get());
+    }
+
+    public Optional<Usuario> deleteByEmail(String email) {
+        Optional<Usuario> usuarioOpt = readByEmail(email);
+        if(usuarioOpt.isEmpty()) {
+            return Optional.empty() ;    
+        }
+        usuarios.removeIf(x-> x.getEmail().equals(usuarioOpt.get().getEmail()));
+        return Optional.of(usuarioOpt.get());
+    }
 }

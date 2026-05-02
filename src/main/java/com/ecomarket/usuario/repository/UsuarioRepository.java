@@ -4,9 +4,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.stereotype.Repository;
+
 import com.ecomarket.usuario.model.Rol;
 import com.ecomarket.usuario.model.Usuario;
 
+@Repository
 public class UsuarioRepository {
     
     List<Usuario> usuarios = new ArrayList<>();

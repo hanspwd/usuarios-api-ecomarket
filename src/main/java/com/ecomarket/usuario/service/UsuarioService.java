@@ -6,7 +6,6 @@ import java.util.concurrent.atomic.AtomicInteger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.ecomarket.usuario.model.Rol;
 import com.ecomarket.usuario.model.Usuario;
 import com.ecomarket.usuario.repository.UsuarioRepository;
 

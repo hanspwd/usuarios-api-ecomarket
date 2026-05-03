@@ -6,7 +6,6 @@ import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
-import com.ecomarket.usuario.model.Rol;
 import com.ecomarket.usuario.model.Usuario;
 
 @Repository

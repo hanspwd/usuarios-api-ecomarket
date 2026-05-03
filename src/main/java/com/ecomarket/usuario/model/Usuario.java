@@ -36,7 +36,6 @@ public class Usuario {
     private String email;
 
     @NotNull(message = "El rol no puede ser nulo")
-    @NotEmpty(message = "El rol no puede estar vacío")
     private Rol rol;
 
 }

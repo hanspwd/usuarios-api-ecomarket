@@ -26,9 +26,9 @@ public class UsuarioRepository {
         return usuarios.stream().filter(x -> x.getEmail().equals(email)).findFirst();
     }
 
-    public Usuario create(Usuario usuario) {
+    public Optional<Usuario> create(Usuario usuario) {
         usuarios.add(usuario);
-        return usuario;
+        return Optional.of(usuario);
     }
 
     public Optional<Usuario> update(Usuario nUsuario, Integer id) {

@@ -1,6 +1,7 @@
 package com.ecomarket.usuario.service;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,9 +22,9 @@ RestControllerAdvice: Si el Service lanzó la excepción, la intercepta y devuel
 
 @Service
 public class UsuarioService {
-    
     @Autowired
     private UsuarioRepository usuarioRepository;
+    private AtomicInteger idCounter = new AtomicInteger(1);
 
     public List<Usuario> readAll() {
         return usuarioRepository.readAll();
@@ -38,14 +39,15 @@ public class UsuarioService {
     }
 
     public Usuario create(Usuario usuario) {
-        return usuarioRepository.create(usuario);
+        usuario.setId(idCounter.getAndIncrement());
+        return usuarioRepository.create(usuario).orElse(null);
     }
 
     public Usuario update(Usuario usuario, Integer id) {
         return usuarioRepository.update(usuario, id).orElse(null);
     }
 
-    public Usuario updateRolById(Integer id, Rol nuevoRol) {
+    public Usuario updateRolById(Rol nuevoRol , Integer id) {
         return usuarioRepository.updateRolById(id, nuevoRol).orElse(null);
     }
 

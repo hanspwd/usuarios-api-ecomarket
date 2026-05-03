@@ -7,12 +7,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ecomarket.usuario.model.Rol;
 import com.ecomarket.usuario.model.Usuario;
 import com.ecomarket.usuario.service.UsuarioService;
 
 import jakarta.validation.Valid;
 
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -82,6 +82,7 @@ public class UsuarioController {
             oldUsuario.setApellido(nuevoUsuario.getApellido());
             oldUsuario.setDireccion(nuevoUsuario.getDireccion());
             oldUsuario.setEmail(nuevoUsuario.getEmail());
+            oldUsuario.setRol(nuevoUsuario.getRol());
             
             oldUsuario = usuarioService.update(oldUsuario, id);
             return ResponseEntity.ok(oldUsuario);
@@ -90,15 +91,21 @@ public class UsuarioController {
         return ResponseEntity.status(404).body("Recurso no encontrado");
     }
 
-    @PutMapping("rol/{id}")
-    public ResponseEntity<?> putUsuarioRolById(@PathVariable Integer id, @RequestBody Rol nuevoRol) {
-        Usuario oldUsuario = usuarioService.readById(id);
-        if(oldUsuario != null) {
-            oldUsuario.setRol(nuevoRol);
-            oldUsuario = usuarioService.updateRolById(nuevoRol, id);
-            return ResponseEntity.ok(oldUsuario);
+    @DeleteMapping("id/{id}")
+    public ResponseEntity<?> deleteUsuarioById(@PathVariable Integer id) {
+        Usuario usuario = usuarioService.deleteById(id);
+        if(usuario != null) {
+            return ResponseEntity.ok("Usuario con id " + id + " eliminado exitosamente");
         }
+        return ResponseEntity.status(404).body("Recurso no encontrado");
+    }
 
+    @DeleteMapping("email/{email}")
+    public ResponseEntity<?> deleteUsuarioById(@PathVariable String email) {
+        Usuario usuario = usuarioService.deleteByEmail(email);
+        if(usuario != null) {
+            return ResponseEntity.ok("Usuario con email " + email + " eliminado exitosamente");
+        }
         return ResponseEntity.status(404).body("Recurso no encontrado");
     }
 }

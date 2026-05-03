@@ -44,16 +44,6 @@ public class UsuarioRepository {
         return Optional.of(usuarioOpt.get());
     }
 
-    public Optional<Usuario> updateRolById(Integer id, Rol nuevoRol) {
-        Optional<Usuario> usuarioOpt = readById(id);
-        if(usuarioOpt.isEmpty()) {
-            return Optional.empty();
-        }
-        usuarioOpt.get().setRol(nuevoRol);
-        return Optional.of(usuarioOpt.get());
-
-    }
-
     public Optional<Usuario> deleteById(Integer id) {
         Optional<Usuario> usuarioOpt = readById(id);
         if(usuarioOpt.isEmpty()) {

@@ -47,10 +47,6 @@ public class UsuarioService {
         return usuarioRepository.update(usuario, id).orElse(null);
     }
 
-    public Usuario updateRolById(Rol nuevoRol , Integer id) {
-        return usuarioRepository.updateRolById(id, nuevoRol).orElse(null);
-    }
-
     public Usuario deleteById(Integer id) {
         return usuarioRepository.deleteById(id).orElse(null);
     }
